@@ -30,13 +30,6 @@ A full-stack web application that connects clients and freelancers — enabling 
 
 ---
 
-## 🖥️ Screenshots
-
-> _Add your screenshots here of dashboards, forms, listings, etc._  
-![Dashboard Screenshot](./screenshots/dashboard.png)
-
----
-
 ## ⚙️ How to Run Locally
 
 ### 🔧 Backend (Spring Boot)
@@ -50,10 +43,8 @@ A full-stack web application that connects clients and freelancers — enabling 
 1. Clone the frontend repo
 2. Install dependencies:
 
-        bash
         npm install
 
 3. Start dev server:
 
-        bash
         npm run dev
