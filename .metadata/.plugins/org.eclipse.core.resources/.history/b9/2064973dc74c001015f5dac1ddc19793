@@ -1,0 +1,31 @@
+package com.workhub.freelancebackend.service;
+
+import com.workhub.freelancebackend.entity.Bid;
+import com.workhub.freelancebackend.repository.BidRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+
+@Service
+public class BidServiceImpl implements BidService {
+
+    @Autowired
+    private BidRepository bidRepository;
+
+    @Override
+    public Bid placeBid(Bid bid) {
+        bid.setStatus("PENDING");
+        return bidRepository.save(bid);
+    }
+
+    @Override
+    public List<Bid> getBidsByJobId(Long jobId) {
+        return bidRepository.findByJobId(jobId);
+    }
+
+    @Override
+    public List<Bid> getBidsByFreelancerId(Long freelancerId) {
+        return bidRepository.findByFreelancerId(freelancerId);
+    }
+}

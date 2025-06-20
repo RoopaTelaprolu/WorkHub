@@ -1,0 +1,12 @@
+package com.workhub.freelancebackend.service;
+
+import com.workhub.freelancebackend.entity.Bid;
+
+import java.util.List;
+
+public interface BidService {
+    Bid placeBid(Bid bid);
+    List<Bid> getBidsByJobId(Long jobId);
+    List<Bid> getBidsByFreelancerId(Long freelancerId);
+	Bid acceptBid(Long bidId);
+}

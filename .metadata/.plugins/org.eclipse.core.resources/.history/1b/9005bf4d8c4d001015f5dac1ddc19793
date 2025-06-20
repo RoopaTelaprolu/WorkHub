@@ -1,0 +1,14 @@
+package com.workhub.freelancebackend.repository;
+
+import java.util.List;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+import com.workhub.freelancebackend.entity.Review;
+
+public interface ReviewRepository extends JpaRepository<Review, Long> {
+    List<Review> findByFreelancerId(Long freelancerId);
+    List<Review> findByJobId(Long jobId);
+    @Query("SELECT AVG(r.rating) FROM Review r WHERE r.clientId = :clientId")
+    Double getAverageRatingByClient(@Param("clientId") Long clientId);
+
+}

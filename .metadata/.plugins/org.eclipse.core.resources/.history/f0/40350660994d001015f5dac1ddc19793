@@ -1,0 +1,13 @@
+package com.workhub.freelancebackend.service;
+
+import com.workhub.freelancebackend.entity.User;
+
+import java.util.List;
+import java.util.Optional;
+
+public interface UserService {
+    User registerUser(User user);
+    List<User> getAllUsers();
+    Optional<User> getUserByEmail(String email);
+    
+}

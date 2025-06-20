@@ -1,0 +1,5 @@
+package com.workhub.freelancebackend.service;
+
+public class JobServiceImpl {
+
+}

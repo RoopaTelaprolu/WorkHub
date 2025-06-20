@@ -1,0 +1,102 @@
+package com.workhub.freelancebackend.controller;
+
+import com.workhub.freelancebackend.entity.Bid;
+import com.workhub.freelancebackend.entity.Job;
+import com.workhub.freelancebackend.repository.BidRepository;
+import com.workhub.freelancebackend.repository.JobRepository;
+import com.workhub.freelancebackend.service.BidService;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+import java.util.Optional;
+
+@RestController
+@RequestMapping("/api/bids")
+@CrossOrigin(origins = "*")
+public class BidController {
+
+    @Autowired
+    private BidService bidService;
+
+    @Autowired
+    private BidRepository bidRepository;
+
+    @Autowired
+    private JobRepository jobRepository;
+
+    // ✅ 1. Place a new bid with default status "Pending"
+    @PostMapping
+    public ResponseEntity<Bid> createBid(@RequestBody Bid bid) {
+        bid.setStatus("Pending");
+        Bid saved = bidRepository.save(bid);
+        return ResponseEntity.ok(saved);
+    }
+
+    // ✅ 2. Get all bids for a job
+    @GetMapping("/job/{jobId}")
+    public ResponseEntity<List<Bid>> getBidsByJob(@PathVariable Long jobId) {
+        return ResponseEntity.ok(bidRepository.findByJobId(jobId));
+    }
+
+    // ✅ 3. Get all bids placed by a freelancer
+    @GetMapping("/freelancer/{freelancerId}")
+    public ResponseEntity<List<Bid>> getBidsByFreelancer(@PathVariable Long freelancerId) {
+        return ResponseEntity.ok(bidRepository.findByFreelancerId(freelancerId));
+    }
+
+    // ✅ 4. Accept a bid
+    @PutMapping("/{bidId}/accept")
+    public ResponseEntity<String> acceptBid(@PathVariable Long bidId) {
+        Optional<Bid> bidOpt = bidRepository.findById(bidId);
+        if (bidOpt.isEmpty()) return ResponseEntity.notFound().build();
+
+        Bid acceptedBid = bidOpt.get();
+
+        // 1. Mark the selected bid as "Accepted"
+        acceptedBid.setStatus("Accepted");
+        bidRepository.save(acceptedBid);
+
+        // 2. Mark all other bids for that job as "Rejected"
+        List<Bid> allBids = bidRepository.findByJobId(acceptedBid.getJobId());
+        for (Bid b : allBids) {
+            if (!b.getId().equals(bidId)) {
+                b.setStatus("Rejected");
+                bidRepository.save(b);
+            }
+        }
+
+        // 3. Assign freelancer to the job
+        Optional<Job> jobOpt = jobRepository.findById(acceptedBid.getJobId());
+        if (jobOpt.isPresent()) {
+            Job job = jobOpt.get();
+            job.setAssignedFreelancerId(acceptedBid.getFreelancerId());
+            job.setStatus("Assigned");
+            jobRepository.save(job);
+        }
+
+        return ResponseEntity.ok("Bid accepted and job assigned.");
+    }
+    
+ // ❌ Reject a bid
+    @PutMapping("/{bidId}/reject")
+    public ResponseEntity<String> rejectBid(@PathVariable Long bidId) {
+        Optional<Bid> bidOpt = bidRepository.findById(bidId);
+        if (bidOpt.isEmpty()) return ResponseEntity.notFound().build();
+
+        Bid rejectedBid = bidOpt.get();
+        rejectedBid.setStatus("Rejected");
+        bidRepository.save(rejectedBid);
+
+        return ResponseEntity.ok("Bid rejected.");
+    }
+    
+    @GetMapping("/client/{clientId}")
+    public ResponseEntity<List<Bid>> getBidsByClient(@PathVariable Long clientId) {
+        return ResponseEntity.ok(bidRepository.findBidsByClientId(clientId));
+    }
+
+
+}

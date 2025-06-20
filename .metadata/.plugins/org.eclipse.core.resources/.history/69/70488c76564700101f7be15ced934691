@@ -1,0 +1,5 @@
+package com.workhub.freelancebackend.entity;
+
+public class Bid {
+
+}

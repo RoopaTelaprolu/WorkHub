@@ -1,0 +1,94 @@
+package com.workhub.freelancebackend.entity;
+
+import jakarta.persistence.*;
+
+@Entity
+@Table(name = "reviews")
+public class Review {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    private Long jobId;
+    private Long freelancerId;
+    private Long clientId;
+
+    private int rating;
+
+    @Column(length = 1000)
+    private String feedback;
+    private String freelancerName;
+    
+
+
+    public Review() {}
+
+    public Review(Long jobId, Long freelancerId, Long clientId, int rating, String feedback) {
+        this.jobId = jobId;
+        this.freelancerId = freelancerId;
+        this.clientId = clientId;
+        this.rating = rating;
+        this.feedback = feedback;
+    }
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public Long getJobId() {
+		return jobId;
+	}
+
+	public void setJobId(Long jobId) {
+		this.jobId = jobId;
+	}
+
+	public Long getFreelancerId() {
+		return freelancerId;
+	}
+
+	public void setFreelancerId(Long freelancerId) {
+		this.freelancerId = freelancerId;
+	}
+
+	public Long getClientId() {
+		return clientId;
+	}
+
+	public void setClientId(Long clientId) {
+		this.clientId = clientId;
+	}
+
+	public int getRating() {
+		return rating;
+	}
+
+	public void setRating(int rating) {
+		this.rating = rating;
+	}
+
+	public String getFeedback() {
+		return feedback;
+	}
+
+	public void setFeedback(String feedback) {
+		this.feedback = feedback;
+	}
+
+	public String getFreelancerName() {
+		return freelancerName;
+	}
+
+	public void setFreelancerName(String freelancerName) {
+		this.freelancerName = freelancerName;
+	}
+
+    // Getters and setters
+    // (Generate all using your IDE or add manually)
+    // ...
+}

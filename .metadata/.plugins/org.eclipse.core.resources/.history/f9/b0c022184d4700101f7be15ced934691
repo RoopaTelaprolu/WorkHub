@@ -1,0 +1,3 @@
+spring.application.name=WorkHub_Freelance
+
+server.port=4444

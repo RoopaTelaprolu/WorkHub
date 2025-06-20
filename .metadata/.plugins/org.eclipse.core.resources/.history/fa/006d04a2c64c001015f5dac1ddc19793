@@ -1,0 +1,32 @@
+package com.workhub.freelancebackend.model;
+
+import jakarta.persistence.*;
+
+@Entity
+@Table(name = "bids")
+public class Bid {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    private Long jobId;
+    private Long freelancerId;
+
+    private String proposal;
+    private double bidAmount;
+
+    private String status; // PENDING, ACCEPTED, REJECTED
+
+    public Bid() {}
+
+    public Bid(Long jobId, Long freelancerId, String proposal, double bidAmount, String status) {
+        this.jobId = jobId;
+        this.freelancerId = freelancerId;
+        this.proposal = proposal;
+        this.bidAmount = bidAmount;
+        this.status = status;
+    }
+
+    // Getters and Setters 👇
+}

@@ -1,0 +1,7 @@
+package com.workhub.freelancebackend.config;
+
+
+@Component
+public class JwtUtil {
+
+}

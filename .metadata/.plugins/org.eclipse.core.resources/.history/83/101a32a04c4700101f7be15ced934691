@@ -1,0 +1,14 @@
+package com.workhub.freelancebackend;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+@SpringBootApplication
+public class WorkHubFreelanceApplication {
+
+	public static void main(String[] args) {
+		SpringApplication.run(WorkHubFreelanceApplication.class, args);
+		System.out.println("WorkHub is running");
+	}
+
+}

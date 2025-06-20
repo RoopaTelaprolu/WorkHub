@@ -1,0 +1,35 @@
+package com.workhub.freelancebackend.entity;
+
+import jakarta.persistence.*;
+
+@Entity
+@Table(name = "reviews")
+public class Review {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    private Long jobId;
+    private Long freelancerId;
+    private Long clientId;
+
+    private int rating;
+
+    @Column(length = 1000)
+    private String feedback;
+
+    public Review() {}
+
+    public Review(Long jobId, Long freelancerId, Long clientId, int rating, String feedback) {
+        this.jobId = jobId;
+        this.freelancerId = freelancerId;
+        this.clientId = clientId;
+        this.rating = rating;
+        this.feedback = feedback;
+    }
+
+    // Getters and setters
+    // (Generate all using your IDE or add manually)
+    // ...
+}

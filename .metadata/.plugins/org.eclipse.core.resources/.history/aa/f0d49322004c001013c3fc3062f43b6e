@@ -1,0 +1,43 @@
+package com.workhub.freelancebackend.controller;
+
+import com.workhub.freelancebackend.entity.Bid;
+import com.workhub.freelancebackend.service.BidService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+import java.util.Optional;
+
+@RestController
+@RequestMapping("/api/bids")
+@CrossOrigin(origins = "*")
+public class BidController {
+
+    @Autowired
+    private BidService bidService;
+
+    @PostMapping("/place")
+    public Bid placeBid(@RequestBody Bid bid) {
+        return bidService.placeBid(bid);
+    }
+
+    @GetMapping("/job/{jobId}")
+    public List<Bid> getBidsByJobId(@PathVariable Long jobId) {
+        return bidService.getBidsByJobId(jobId);
+    }
+
+    @GetMapping("/freelancer/{freelancerId}")
+    public List<Bid> getBidsByFreelancerId(@PathVariable Long freelancerId) {
+        return bidService.getBidsByFreelancerId(freelancerId);
+    }
+
+    @GetMapping("/{id}")
+    public Optional<Bid> getBidById(@PathVariable Long id) {
+        return bidService.getBidById(id);
+    }
+
+    @DeleteMapping("/{id}")
+    public void deleteBid(@PathVariable Long id) {
+        bidService.deleteBid(id);
+    }
+}

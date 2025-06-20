@@ -1,0 +1,51 @@
+package com.workhub.freelancebackend.controller;
+
+import com.workhub.freelancebackend.entity.Bid;
+import com.workhub.freelancebackend.repository.BidRepository;
+import com.workhub.freelancebackend.service.BidService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+
+@RestController
+@RequestMapping("/api/bids")
+@CrossOrigin(origins = "*")
+public class BidController {
+
+    @Autowired
+    private BidService bidService;
+    
+    @Autowired
+    private BidRepository bidRepository;
+
+    @PostMapping("/place")
+    public Bid placeBid(@RequestBody Bid bid) {
+        return bidService.placeBid(bid);
+    }
+
+    @GetMapping("/job/{jobId}")
+    public ResponseEntity<List<Bid>> getBidsByJob(@PathVariable Long jobId) {
+        return ResponseEntity.ok(bidRepository.findByJobId(jobId));
+    }
+
+
+    @GetMapping("/freelancer/{freelancerId}")
+    public List<Bid> getBidsByFreelancer(@PathVariable Long freelancerId) {
+        return bidService.getBidsByFreelancerId(freelancerId);
+    }
+    
+    @PutMapping("/accept/{bidId}")
+    public Bid acceptBid(@PathVariable Long bidId) {
+        return bidService.acceptBid(bidId);
+    }
+    
+    @PostMapping
+    public ResponseEntity<Bid> createBid(@RequestBody Bid bid) {
+        Bid saved = bidRepository.save(bid);
+        return ResponseEntity.ok(saved);
+    }
+
+
+}

@@ -1,0 +1,44 @@
+//package com.workhub.freelancebackend.service;
+//
+//import com.workhub.freelancebackend.entity.Job;
+//import com.workhub.freelancebackend.repository.JobRepository;
+//import lombok.RequiredArgsConstructor;
+//
+//import org.springframework.beans.factory.annotation.Autowired;
+//import org.springframework.stereotype.Service;
+//
+//import java.util.List;
+//import java.util.Optional;
+//
+//@Service
+//@RequiredArgsConstructor
+//public class JobServiceImpl implements JobService 
+//{
+//	@Autowired
+//    private JobRepository jobRepository;
+//
+//    @Override
+//    public Job postJob(Job job) {
+//        return jobRepository.save(job);
+//    }
+//
+//    @Override
+//    public List<Job> getAllJobs() {
+//        return jobRepository.findAll();
+//    }
+//
+//    @Override
+//    public Optional<Job> getJobById(Long id) {
+//        return jobRepository.findById(id);
+//    }
+//
+//    @Override
+//    public List<Job> getJobsByClientId(Long clientId) {
+//        return jobRepository.findByClientId(clientId);
+//    }
+//
+//    @Override
+//    public void deleteJob(Long id) {
+//        jobRepository.deleteById(id);
+//    }
+//}

@@ -1,0 +1,29 @@
+package com.workhub.freelancebackend.controller;
+
+import com.workhub.freelancebackend.entity.Review;
+import com.workhub.freelancebackend.repository.ReviewRepository;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+
+@RestController
+@RequestMapping("/api/reviews")
+@CrossOrigin(origins = "*")
+public class ReviewController {
+
+    @Autowired
+    private ReviewRepository reviewRepository;
+
+    @PostMapping
+    public ResponseEntity<Review> addReview(@RequestBody Review review) {
+        return ResponseEntity.ok(reviewRepository.save(review));
+    }
+
+    @GetMapping("/freelancer/{freelancerId}")
+    public ResponseEntity<List<Review>> getFreelancerReviews(@PathVariable Long freelancerId) {
+        return ResponseEntity.ok(reviewRepository.findByFreelancerId(freelancerId));
+    }
+}

@@ -1,0 +1,76 @@
+package com.workhub.freelancebackend.controller;
+
+import com.workhub.freelancebackend.config.JwtUtil;
+import com.workhub.freelancebackend.entity.User;
+import com.workhub.freelancebackend.repository.UserRepository;
+import jakarta.validation.Valid;
+import lombok.Getter;
+import lombok.Setter;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.*;
+
+@RestController
+@RequestMapping("/api/auth")
+@CrossOrigin(origins = "*")
+public class AuthController {
+
+    @Autowired
+    private AuthenticationManager authenticationManager;
+
+    @Autowired
+    private JwtUtil jwtUtil;
+
+    @Autowired
+    private UserRepository userRepository;
+
+    @PostMapping("/login")
+    public ResponseEntity<?> login(@RequestBody @Validated LoginRequest loginRequest) {
+        try {
+            Authentication authentication = authenticationManager.authenticate(
+                    new UsernamePasswordAuthenticationToken(
+                            loginRequest.getEmail(),
+                            loginRequest.getPassword()
+                    )
+            );
+
+            User user = userRepository.findByEmail(loginRequest.getEmail()).orElseThrow();
+            String token = jwtUtil.generateToken(user.getEmail());
+
+            return ResponseEntity.ok(new JwtResponse(token, user.getName(), user.getRole().toString()));
+        } catch (BadCredentialsException ex) {
+            return ResponseEntity.status(401).body("Invalid email or password");
+        }
+    }
+
+    @Getter
+    @Setter
+    static class LoginRequest {
+        private String email;
+        private String password;
+		public Object getEmail() {
+			// TODO Auto-generated method stub
+			return null;
+		}
+    }
+
+    @Getter
+    @Setter
+    static class JwtResponse {
+        private String token;
+        private String name;
+        private String role;
+
+        public JwtResponse(String token, String name, String role) {
+            this.token = token;
+            this.name = name;
+            this.role = role;
+        }
+    }
+}

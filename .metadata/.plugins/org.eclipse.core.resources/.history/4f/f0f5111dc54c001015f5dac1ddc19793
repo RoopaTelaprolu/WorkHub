@@ -1,0 +1,77 @@
+package com.workhub.freelancebackend.entity;
+
+import jakarta.persistence.*;
+import lombok.*;
+
+import java.time.LocalDateTime;
+import java.util.List;
+
+@Entity
+@Table(name = "jobs")
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
+public class Job 
+{
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    private String title;
+    private String description;
+    private String category;
+    private Double budget;
+    private LocalDateTime postedAt;
+    @ManyToOne
+    @JoinColumn(name = "client_id")
+    private User client;
+    @OneToMany(mappedBy = "job", cascade = CascadeType.ALL)
+    private List<Bid> bids;
+	public Long getId() {
+		return id;
+	}
+	public void setId(Long id) {
+		this.id = id;
+	}
+	public String getTitle() {
+		return title;
+	}
+	public void setTitle(String title) {
+		this.title = title;
+	}
+	public String getDescription() {
+		return description;
+	}
+	public void setDescription(String description) {
+		this.description = description;
+	}
+	public String getCategory() {
+		return category;
+	}
+	public void setCategory(String category) {
+		this.category = category;
+	}
+	public Double getBudget() {
+		return budget;
+	}
+	public void setBudget(Double budget) {
+		this.budget = budget;
+	}
+	public LocalDateTime getPostedAt() {
+		return postedAt;
+	}
+	public void setPostedAt(LocalDateTime postedAt) {
+		this.postedAt = postedAt;
+	}
+	public User getClient() {
+		return client;
+	}
+	public void setClient(User client) {
+		this.client = client;
+	}
+	public List<Bid> getBids() {
+		return bids;
+	}
+	public void setBids(List<Bid> bids) {
+		this.bids = bids;
+	}
+}

@@ -1,0 +1,69 @@
+package com.workhub.freelancebackend.service;
+
+import com.workhub.freelancebackend.entity.Bid;
+import com.workhub.freelancebackend.repository.BidRepository;
+import com.workhub.freelancebackend.repository.JobRepository;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+
+@Service
+public class BidServiceImpl implements BidService {
+
+    @Autowired
+    private BidRepository bidRepository;
+    
+    @Autowired
+    private JobRepository jobRepository;
+
+
+    @Override
+    public Bid placeBid(Bid bid) {
+        bid.setStatus("PENDING");
+        return bidRepository.save(bid);
+    }
+
+    @Override
+    public List<Bid> getBidsByJobId(Long jobId) {
+        return bidRepository.findByJobId(jobId);
+    }
+
+    @Override
+    public List<Bid> getBidsByFreelancerId(Long freelancerId) {
+        return bidRepository.findByFreelancerId(freelancerId);
+    }
+    
+    @Override
+    public Bid acceptBid(Long bidId) {
+        Bid acceptedBid = bidRepository.findById(bidId)
+                .orElseThrow(() -> new RuntimeException("Bid not found"));
+
+        if (!"PENDING".equals(acceptedBid.getStatus())) {
+            throw new RuntimeException("Bid is already processed.");
+        }
+
+        // Set accepted bid status
+        acceptedBid.setStatus("ACCEPTED");
+        bidRepository.save(acceptedBid);
+
+        // Reject all other bids for the same job
+        List<Bid> allBids = bidRepository.findByJobId(acceptedBid.getJobId());
+        for (Bid b : allBids) {
+            if (!b.getId().equals(bidId)) {
+                b.setStatus("REJECTED");
+                bidRepository.save(b);
+            }
+        }
+
+        // Update job status to IN_PROGRESS
+        jobRepository.findById(acceptedBid.getJobId()).ifPresent(job -> {
+            job.setStatus("IN_PROGRESS");
+            jobRepository.save(job);
+        });
+
+        return acceptedBid;
+    }
+
+}

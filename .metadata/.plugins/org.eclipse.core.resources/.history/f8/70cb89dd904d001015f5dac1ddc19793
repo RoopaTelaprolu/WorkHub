@@ -1,0 +1,87 @@
+package com.workhub.freelancebackend.controller;
+
+import com.workhub.freelancebackend.entity.Review;
+import com.workhub.freelancebackend.entity.Job;
+import com.workhub.freelancebackend.repository.JobRepository;
+import com.workhub.freelancebackend.repository.ReviewRepository;
+import com.workhub.freelancebackend.repository.UserRepository;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.*;
+
+@RestController
+@RequestMapping("/api/reviews")
+@CrossOrigin(origins = "*")
+public class ReviewController {
+
+    @Autowired
+    private ReviewRepository reviewRepository;
+
+    @Autowired
+    private JobRepository jobRepository;
+    
+    @Autowired
+    private UserRepository userRepository;
+
+    // ✅ Submit a review
+    @PostMapping
+    public ResponseEntity<Review> submitReview(@RequestBody Review review) {
+        Review saved = reviewRepository.save(review);
+        return ResponseEntity.ok(saved);
+    }
+
+    // ✅ Get reviews by freelancer
+    @GetMapping("/freelancer/{freelancerId}")
+    public ResponseEntity<List<Review>> getReviewsForFreelancer(@PathVariable Long freelancerId) {
+        return ResponseEntity.ok(reviewRepository.findByFreelancerId(freelancerId));
+    }
+
+    // ✅ Get job details (to load on LeaveReview page)
+    @GetMapping("/job/{jobId}")
+    public ResponseEntity<Job> getJobById(@PathVariable Long jobId) {
+        Optional<Job> job = jobRepository.findById(jobId);
+        return job.map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
+    }
+    
+//    @DeleteMapping("/{id}")
+//    public ResponseEntity<?> deleteReview(@PathVariable Long id) {
+//        reviewRepository.deleteById(id);
+//        return ResponseEntity.ok("Review deleted.");
+//    }
+    
+    @GetMapping("/client/{clientId}")
+    public ResponseEntity<List<Review>> getReviewsByClient(@PathVariable Long clientId) {
+        return ResponseEntity.ok(reviewRepository.findByClientId(clientId));
+    }
+    
+ // Get all reviews
+    @GetMapping
+    public ResponseEntity<List<Review>> getAllReviews() {
+        return ResponseEntity.ok(reviewRepository.findAll());
+    }
+
+    // Delete a review by ID
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> deleteReview(@PathVariable Long id) {
+        if (!reviewRepository.existsById(id)) {
+            return ResponseEntity.notFound().build();
+        }
+        reviewRepository.deleteById(id);
+        return ResponseEntity.ok("Review deleted successfully!");
+    }
+
+    // Update a review by ID
+    @PutMapping("/{id}")
+    public ResponseEntity<?> updateReview(@PathVariable Long id, @RequestBody Review updated) {
+        return reviewRepository.findById(id).map(review -> {
+            review.setRating(updated.getRating());
+            review.setFeedback(updated.getFeedback());
+            return ResponseEntity.ok(reviewRepository.save(review));
+        }).orElse(ResponseEntity.notFound().build());
+    }
+
+
+}

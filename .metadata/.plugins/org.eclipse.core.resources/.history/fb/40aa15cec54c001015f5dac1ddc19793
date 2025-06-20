@@ -1,0 +1,36 @@
+package com.workhub.freelancebackend.model;
+
+import jakarta.persistence.*;
+import java.time.LocalDate;
+
+@Entity
+@Table(name = "jobs")
+public class Job {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    private String title;
+    private String description;
+    private double budget;
+
+    private LocalDate deadline;
+
+    private String status; // OPEN, IN_PROGRESS, COMPLETED
+
+    private Long clientId; // Reference to User (Client)
+
+    public Job() {}
+
+    public Job(String title, String description, double budget, LocalDate deadline, String status, Long clientId) {
+        this.title = title;
+        this.description = description;
+        this.budget = budget;
+        this.deadline = deadline;
+        this.status = status;
+        this.clientId = clientId;
+    }
+
+    // Getters and Setters 👇 (generate via IDE)
+}

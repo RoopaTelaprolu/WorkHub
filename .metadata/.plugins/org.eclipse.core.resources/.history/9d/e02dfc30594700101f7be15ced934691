@@ -1,0 +1,5 @@
+package com.workhub.freelancebackend.controller;
+
+public class BidController {
+
+}

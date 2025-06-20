@@ -1,0 +1,52 @@
+package com.workhub.freelancebackend.controller;
+
+import com.workhub.freelancebackend.entity.Job;
+import com.workhub.freelancebackend.repository.JobRepository;
+import com.workhub.freelancebackend.service.JobService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+
+@RestController
+@RequestMapping("/api/jobs")
+@CrossOrigin(origins = "*")
+public class JobController {
+
+    @Autowired
+    private JobService jobService;
+    
+    @Autowired
+    private JobRepository jobRepository;
+
+    @PostMapping("/post")
+    public Job postJob(@RequestBody Job job) {
+        return jobService.postJob(job);
+    }
+
+    @GetMapping
+    public ResponseEntity<List<Job>> getAllJobs() {
+        return ResponseEntity.ok(jobRepository.findAll());
+    }
+
+    @GetMapping("/by-client/{clientId}")
+    public List<Job> getJobsByClientId(@PathVariable Long clientId) {
+        return jobService.getJobsByClientId(clientId);
+    }
+
+    @GetMapping("/status/{status}")
+    public List<Job> getJobsByStatus(@PathVariable String status) {
+        return jobService.getJobsByStatus(status);
+    }
+    
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> deleteJob(@PathVariable Long id) {
+        if (jobRepository.existsById(id)) {
+            jobRepository.deleteById(id);
+            return ResponseEntity.ok("Job deleted");
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Job not found");
+        }
+    }
+}

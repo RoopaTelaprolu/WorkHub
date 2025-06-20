@@ -1,0 +1,15 @@
+//package com.workhub.freelancebackend.service;
+//
+//import com.workhub.freelancebackend.entity.Job;
+//
+//import java.util.List;
+//import java.util.Optional;
+//
+//public interface JobService 
+//{
+//    Job postJob(Job job);
+//    List<Job> getAllJobs();
+//    Optional<Job> getJobById(Long id);
+//    List<Job> getJobsByClientId(Long clientId);
+//    void deleteJob(Long id);
+//}

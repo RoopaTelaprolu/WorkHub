@@ -1,0 +1,19 @@
+
+Jun 18, 2025 10:57:35.86 NEW SESSION
+Jun 18, 2025 10:57:35.87 WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+Jun 18, 2025 10:57:35.87 I0000 00:00:1750224455.859195    4248 voice_transcription.cc:58] Registering VoiceTranscriptionCapability
+Jun 18, 2025 10:57:36.20 [9400:13936:0618/105736.205:ERROR:google_apis\gcm\engine\registration_request.cc:291] Registration response error message: DEPRECATED_ENDPOINT
+Jun 18, 2025 10:57:36.33 Created TensorFlow Lite XNNPACK delegate for CPU.
+Jun 18, 2025 10:57:36.33 Attempting to use a delegate that only supports static-sized tensors with a graph that has dynamic-sized tensors (tensor#-1 is a dynamic-sized tensor).
+Jun 18, 2025 10:58:00.93 [9400:13936:0618/105800.936:ERROR:google_apis\gcm\engine\registration_request.cc:291] Registration response error message: DEPRECATED_ENDPOINT
+Jun 18, 2025 10:58:44.41 [9400:13936:0618/105844.410:ERROR:google_apis\gcm\engine\registration_request.cc:291] Registration response error message: DEPRECATED_ENDPOINT
+Jun 18, 2025 11:00:13.13 [9400:13936:0618/110013.130:ERROR:google_apis\gcm\engine\registration_request.cc:291] Registration response error message: DEPRECATED_ENDPOINT
+Jun 18, 2025 11:00:59.84 [9400:13936:0618/110059.844:ERROR:google_apis\gcm\engine\connection_factory_impl.cc:483] ConnectionHandler failed with net error: -2
+Jun 18, 2025 11:17:00.05 [9400:13936:0618/111700.050:ERROR:google_apis\gcm\engine\registration_request.cc:274] Registration URL fetching failed.
+Jun 18, 2025 11:17:00.05 [9400:13936:0618/111700.050:ERROR:google_apis\gcm\engine\connection_factory_impl.cc:434] Failed to connect to MCS endpoint with error -7
+Jun 18, 2025 11:22:49.63 [9400:13936:0618/112249.638:ERROR:google_apis\gcm\engine\registration_request.cc:291] Registration response error message: DEPRECATED_ENDPOINT
+Jun 18, 2025 12:07:08.03 [9400:13936:0618/120708.017:ERROR:google_apis\gcm\engine\connection_factory_impl.cc:483] ConnectionHandler failed with net error: -2
+Jun 18, 2025 12:07:31.69 [9400:13936:0618/120731.695:ERROR:google_apis\gcm\engine\connection_factory_impl.cc:434] Failed to connect to MCS endpoint with error -118
+Jun 18, 2025 12:07:37.70 [9400:12468:0618/120737.708:ERROR:mojo\public\cpp\bindings\lib\interface_endpoint_client.cc:732] Message 0 rejected by interface blink.mojom.WidgetHost
+Jun 18, 2025 12:21:41.39 [9400:13936:0618/122141.398:ERROR:google_apis\gcm\engine\connection_factory_impl.cc:483] ConnectionHandler failed with net error: -2
+Jun 18, 2025 12:38:31.08 [9400:13936:0618/123831.086:ERROR:google_apis\gcm\engine\connection_factory_impl.cc:434] Failed to connect to MCS endpoint with error -7

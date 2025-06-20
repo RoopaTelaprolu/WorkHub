@@ -1,0 +1,43 @@
+//package com.workhub.freelancebackend.controller;
+//
+//import com.workhub.freelancebackend.entity.Job;
+//import com.workhub.freelancebackend.service.JobService;
+//import org.springframework.beans.factory.annotation.Autowired;
+//import org.springframework.web.bind.annotation.*;
+//
+//import java.util.List;
+//import java.util.Optional;
+//
+//@RestController
+//@RequestMapping("/api/jobs")
+//@CrossOrigin(origins = "*")
+//public class JobController {
+//
+//    @Autowired
+//    private JobService jobService;
+//
+//    @PostMapping("/post")
+//    public Job postJob(@RequestBody Job job) {
+//        return jobService.postJob(job);
+//    }
+//
+//    @GetMapping
+//    public List<Job> getAllJobs() {
+//        return jobService.getAllJobs();
+//    }
+//
+//    @GetMapping("/{id}")
+//    public Optional<Job> getJobById(@PathVariable Long id) {
+//        return jobService.getJobById(id);
+//    }
+//
+//    @GetMapping("/client/{clientId}")
+//    public List<Job> getJobsByClientId(@PathVariable Long clientId) {
+//        return jobService.getJobsByClientId(clientId);
+//    }
+//
+//    @DeleteMapping("/{id}")
+//    public void deleteJob(@PathVariable Long id) {
+//        jobService.deleteJob(id);
+//    }
+//}
